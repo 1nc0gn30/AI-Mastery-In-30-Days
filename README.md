@@ -1,16 +1,28 @@
-# AI-Mastery-In-30-Days
+<!-- xonettn -->
+<div align="center">
+
+# 🤖 Ai Mastery In 30 Days
 
 A comprehensive 30-day curriculum to master AI tools, prompt engineering, agents, and security. Start your journey to becoming an AI expert today.
 
-## Overview
+
+![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB) ![Vite](https://img.shields.io/badge/Vite-646CFF?logo=vite&logoColor=white) ![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+
+![Deploy](https://img.shields.io/badge/Deployed-Netlify-00C7B7?logo=netlify&logoColor=white)
+
+</div>
+
+---
+
+## 📋 Overview
 A comprehensive 30-day curriculum to master AI tools, prompt engineering, agents, and security. Start your journey to becoming an AI expert today.
 
-## Tech Stack
+## 📦 Tech Stack
 - React
 - Vite
 - Express
 
-## Project Structure
+## 🗂️ Project Structure
 ```
 AI-Mastery-In-30-Days/
   - public
@@ -18,37 +30,37 @@ AI-Mastery-In-30-Days/
   (21 files total)
 ```
 
-## Getting Started
+## 🚀 Getting Started
 
-### Prerequisites
+### 📋 Prerequisites
 - Node.js (v18+)
 - npm or yarn
 
-### Installation
+### 📦 Installation
 ```bash
 git clone https://github.com/1nc0gn30/AI-Mastery-In-30-Days.git
 cd AI-Mastery-In-30-Days
 npm install
 ```
 
-### Development
+### 💻 Development
 ```bash
 npm run dev
 ```
 
-### Build
+### 🔨 Build
 ```bash
 npm run build
 ```
 
-### Available Scripts
+### ⚙️ Available Scripts
   npm run dev - vite --port=3000 --host=0.0.0.0
   npm run build - vite build
   npm run preview - vite preview
   npm run clean - rm -rf dist
   npm run lint - tsc --noEmit
 
-## Original README
+## 📂 Original README
 <details>
 <summary>Click to expand original README</summary>
 
@@ -67,12 +79,12 @@ A guided 30-day AI learning platform focused on tools, prompting, agents, and ap
 - Practical implementation-oriented curriculum
 - AI-enhanced user journey with Gemini-backed integration
 
-## Local Development
-### Prerequisites
+## 💻 Local Development
+### 📋 Prerequisites
 - Node.js 20+
 - npm 10+
 
-### Setup
+### ⚙️ Setup
 ```bash
 npm install
 cp .env.example .env.local
@@ -83,25 +95,25 @@ Add your key in `.env.local`:
 GEMINI_API_KEY="your_key_here"
 ```
 
-### Run
+### 🚀 Run
 ```bash
 npm run dev
 ```
 App runs on `http://localhost:3000`.
 
-## Build and Quality
+## 🔨 Build and Quality
 ```bash
 npm run lint
 npm run build
 npm run preview
 ```
 
-## Deploy (Netlify)
+## 🚀 Deploy (Netlify)
 - Build command: `npm run build`
 - Publish directory: `dist`
 - SPA fallback: `public/_redirects`
 
-## SEO Baseline
+## 🔍 SEO Baseline
 - Canonical and social URLs point to: `https://ai-mastery.nealfrazier.tech/`
 - Crawl artifacts (`robots.txt`, `sitemap.xml`) target the same host
 
@@ -115,7 +127,7 @@ vite.config.ts
 
 </details>
 
-## TODO / Roadmap
+## 📝 TODO / Roadmap
 - [ ] Add unit tests
 - [ ] Add LICENSE file
 - [ ] Add Dockerfile for containerized deployment
@@ -128,14 +140,22 @@ vite.config.ts
 - [ ] Update dependencies to latest versions
 - [ ] Add code comments and inline documentation
 
-## Deployment
+## 🚀 Deployment
 This project can be deployed to Netlify, Vercel, or any static host.
 
-## Author
+## 👤 Author
 **Neal Frazier** - [@AshAmplifies](https://github.com/1nc0gn30)
 
-## Links
+## 🔗 Links
 - GitHub: https://github.com/1nc0gn30/AI-Mastery-In-30-Days
 
 ---
 *This README was enhanced as part of the neals-projects-2026 batch update.*
+
+---
+
+<div align="center">
+
+**[xonettn]** · Built by [Neal Frazier](https://github.com/1nc0gn30) · [@AshAmplifies](https://twitter.com/AshAmplifies)
+
+</div>

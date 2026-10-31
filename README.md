@@ -3,8 +3,8 @@
 A guided 30-day AI learning platform focused on tools, prompting, agents, and applied workflows.
 
 ## Snapshot
-- Canonical URL: `https://ai-mastery.nealfrazier.tech/`
-- Author: `Neal Frazier`
+- Canonical URL: `https://ai-mastery.nullai.tech/`
+- Author: `1nc0gn30`
 - Stack: `React 19 + TypeScript + Vite 6 + Tailwind CSS 4`
 - Deployment target: `Netlify`
 
@@ -48,7 +48,7 @@ npm run preview
 - SPA fallback: `public/_redirects`
 
 ## SEO Baseline
-- Canonical and social URLs point to: `https://ai-mastery.nealfrazier.tech/`
+- Canonical and social URLs point to: `https://ai-mastery.nullai.tech/`
 - Crawl artifacts (`robots.txt`, `sitemap.xml`) target the same host
 
 ## Project Layout

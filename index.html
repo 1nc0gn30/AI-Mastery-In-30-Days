@@ -3,19 +3,120 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>AI Mastery in 30 Days | Become an AI Expert</title>
-    <meta name="description" content="A comprehensive 30-day curriculum to master AI tools, prompt engineering, agents, and security. Start your journey to becoming an AI expert today." />
-    <meta name="keywords" content="AI, Artificial Intelligence, AI tools, prompt engineering, AI agents, AI security, 30 day AI course" />
-    <meta name="author" content="Neal Frazier" />
+    <title>AI Mastery in 30 Days | Open Developer Curriculum &amp; Interactive AI Lab</title>
+    <meta name="description" content="A free, open-access 30-day developer curriculum covering LLMs, prompt engineering, RAG, Model Context Protocol (MCP), autonomous agents, local inference, and AI security — with interactive in-browser engineering labs." />
+    <meta name="keywords" content="AI curriculum, 30 day AI course, prompt engineering, RAG tutorial, Model Context Protocol, MCP, AI agents, LLM security, prompt injection, Ollama, developer AI training" />
+    <meta name="author" content="Neal Frazier (Neal Frazier Tech)" />
     <link rel="canonical" href="https://ai-mastery.nealfrazier.tech/" />
-    <meta property="og:title" content="AI Mastery in 30 Days" />
-    <meta property="og:description" content="Master AI tools, agents, and security in just 30 days." />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#09090b" />
+
+    <!-- OpenGraph -->
+    <meta property="og:title" content="AI Mastery in 30 Days — Open Developer Curriculum &amp; Interactive Lab" />
+    <meta property="og:description" content="30 structured daily lessons, knowledge quizzes, persistent study notes, and 4 client-side AI engineering labs (Prompt Linter, Token &amp; Cost Analyzer, RAG Simulator, Security Scanner)." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://ai-mastery.nealfrazier.tech/" />
+    <meta property="og:image" content="https://ai-mastery.nealfrazier.tech/og-card.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="AI Mastery in 30 Days — Open Developer Curriculum and Interactive AI Engineering Lab" />
+    <meta property="og:site_name" content="AI Mastery in 30 Days" />
+
+    <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@1nc0gn30" />
+    <meta name="twitter:creator" content="@1nc0gn30" />
     <meta name="twitter:url" content="https://ai-mastery.nealfrazier.tech/" />
-    <meta name="twitter:title" content="AI Mastery in 30 Days" />
-    <meta name="twitter:description" content="The ultimate path to AI expertise." />
+    <meta name="twitter:title" content="AI Mastery in 30 Days — Open Developer Curriculum" />
+    <meta name="twitter:description" content="Free 30-day AI engineering curriculum with interactive Prompt, Token/VRAM, RAG Retrieval, and Prompt Injection labs running 100% in-browser." />
+    <meta name="twitter:image" content="https://ai-mastery.nealfrazier.tech/og-card.png" />
+    <meta name="twitter:image:alt" content="AI Mastery in 30 Days Curriculum and Interactive Lab preview card" />
+
+    <!-- Structured Data (SEO & AEO Graph) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebApplication",
+            "@id": "https://ai-mastery.nealfrazier.tech/#app",
+            "name": "AI Mastery in 30 Days",
+            "url": "https://ai-mastery.nealfrazier.tech/",
+            "description": "Free, open-access 30-day AI engineering curriculum with progress tracking, per-day quizzes, persistent study notes, and interactive client-side labs for prompt engineering, token cost/VRAM analysis, RAG retrieval, and prompt injection auditing.",
+            "applicationCategory": "EducationalApplication",
+            "operatingSystem": "Web Browser (Cross-Platform)",
+            "isAccessibleForFree": true,
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD"
+            },
+            "creator": {
+              "@type": "Person",
+              "name": "Neal Frazier",
+              "alternateName": "1nc0gn30",
+              "url": "https://github.com/1nc0gn30",
+              "affiliation": {
+                "@type": "Organization",
+                "name": "Neal Frazier Tech",
+                "url": "https://nullai.tech"
+              }
+            }
+          },
+          {
+            "@type": "Course",
+            "@id": "https://ai-mastery.nealfrazier.tech/#course",
+            "name": "AI Mastery in 30 Days",
+            "description": "A 30-day hands-on engineering roadmap spanning LLM fundamentals, P.C.T.F. prompting, multimodal models, RAG pipelines, function calling, Model Context Protocol (MCP), multi-agent frameworks, local Ollama inference, and OWASP LLM security.",
+            "provider": {
+              "@type": "Organization",
+              "name": "Neal Frazier Tech",
+              "sameAs": "https://nullai.tech"
+            },
+            "educationalLevel": "Beginner to Advanced",
+            "isAccessibleForFree": true,
+            "numberOfCredits": 30,
+            "hasCourseInstance": {
+              "@type": "CourseInstance",
+              "courseMode": "online",
+              "courseWorkload": "PT15H"
+            }
+          },
+          {
+            "@type": "FAQPage",
+            "@id": "https://ai-mastery.nealfrazier.tech/#faq",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "Is AI Mastery in 30 Days completely free to use?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. All 30 curriculum modules, daily knowledge quizzes, study note exports, and all four interactive AI engineering labs are 100% free and unlocked with no account, paywall, or subscription required. Optional support is available via Buy Us a Coffee."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "How is my learning progress and study journal stored?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "All completed days, quiz scores, and personal journal reflections are stored locally in your browser's localStorage. Zero data is transmitted to external servers, and you can export your full study log as a Markdown file anytime."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do the interactive AI engineering labs require an API key?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. The P.C.T.F. Prompt Linter, Token/Context/VRAM Cost Calculator, TF-IDF RAG Chunking Simulator, and OWASP LLM01 Prompt Injection Analyzer all execute deterministically client-side in your browser."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
     <div id="root"></div>

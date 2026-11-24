@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'motion/react';
-import { X, ExternalLink, Monitor, Terminal, Key, ShieldCheck, Globe } from 'lucide-react';
+import { motion } from 'motion/react';
+import { X, ExternalLink, Monitor, Terminal, Key, ShieldCheck, Globe, Copy, Check } from 'lucide-react';
 import { cn } from '../lib/utils';
 
 interface OnboardingModalProps {
@@ -10,122 +10,180 @@ interface OnboardingModalProps {
 type OSType = 'mac' | 'windows' | 'linux';
 
 export function OnboardingModal({ onClose }: OnboardingModalProps) {
-  const [os, setOs] = useState<OSType>('mac');
+  const [os, setOs] = useState<OSType>('linux');
+  const [copiedCmd, setCopiedCmd] = useState(false);
 
   useEffect(() => {
-    const savedOs = localStorage.getItem('ai-mastery-os') as OSType;
-    if (savedOs) {
+    const savedOs = localStorage.getItem('ai-mastery-os') as OSType | null;
+    if (savedOs === 'mac' || savedOs === 'windows' || savedOs === 'linux') {
       setOs(savedOs);
-      return;
+    } else {
+      const ua = window.navigator.userAgent.toLowerCase();
+      if (ua.includes('mac')) setOs('mac');
+      else if (ua.includes('win')) setOs('windows');
+      else setOs('linux');
     }
 
-    const ua = window.navigator.userAgent.toLowerCase();
-    if (ua.includes('mac')) setOs('mac');
-    else if (ua.includes('win')) setOs('windows');
-    else if (ua.includes('linux')) setOs('linux');
-  }, []);
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
 
   const handleSetOs = (type: OSType) => {
     setOs(type);
+    setCopiedCmd(false);
     localStorage.setItem('ai-mastery-os', type);
   };
 
-  const cliCommands = {
+  const cliCommands: Record<OSType, { tool: string; command: string; description: string }> = {
     mac: {
-      tool: 'Ollama',
-      command: 'brew install ollama',
-      description: 'The easiest way to run local LLMs on macOS.'
+      tool: 'Ollama (macOS)',
+      command: 'brew install ollama && ollama pull llama3.1:8b',
+      description: 'Run quantized local LLMs on Apple Silicon with Metal acceleration.',
     },
     windows: {
       tool: 'Ollama (Windows)',
-      command: 'winget install ollama',
-      description: 'Run powerful open-source models inside your terminal.'
+      command: 'winget install Ollama.Ollama',
+      description: 'Install native Ollama CLI and OpenAI-compatible local endpoint.',
     },
     linux: {
-      tool: 'Ollama',
+      tool: 'Ollama (Linux)',
       command: 'curl -fsSL https://ollama.com/install.sh | sh',
-      description: 'Native Linux installation for high-performance inference.'
-    }
+      description: 'Native Linux installation with CUDA/ROCm GPU detection.',
+    },
   };
 
   const aiProviders = [
-    { name: 'Google AI Studio', url: 'https://aistudio.google.com/', feature: 'Free Gemini API keys', icon: ShieldCheck },
-    { name: 'Anthropic Console', url: 'https://console.anthropic.com/', feature: 'Access to Claude 3.5 Sonnet', icon: Key },
-    { name: 'OpenAI Platform', url: 'https://platform.openai.com/', feature: 'The industry standard APIs', icon: Globe },
+    {
+      name: 'Google AI Studio',
+      url: 'https://aistudio.google.com/',
+      feature: 'Free-tier Gemini API keys & 1M+ token playground',
+      icon: ShieldCheck,
+    },
+    {
+      name: 'Anthropic Console',
+      url: 'https://console.anthropic.com/',
+      feature: 'Claude API workbench & prompt caching docs',
+      icon: Key,
+    },
+    {
+      name: 'OpenAI Platform',
+      url: 'https://platform.openai.com/',
+      feature: 'GPT APIs, structured outputs & tokenizer reference',
+      icon: Globe,
+    },
   ];
+
+  const handleCopyCommand = async () => {
+    try {
+      await navigator.clipboard.writeText(cliCommands[os].command);
+      setCopiedCmd(true);
+      setTimeout(() => setCopiedCmd(false), 1800);
+    } catch {
+      // ignore
+    }
+  };
 
   return (
     <motion.div
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="setup-guide-title"
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-slate-900/40 dark:bg-black/90 backdrop-blur-md"
+      onClick={onClose}
+      className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6 bg-black/75 backdrop-blur-sm"
     >
       <motion.div
-        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+        initial={{ scale: 0.96, opacity: 0, y: 12 }}
         animate={{ scale: 1, opacity: 1, y: 0 }}
-        className="w-full max-w-2xl bg-white dark:bg-[#0d0d0d] border border-slate-200 dark:border-white/10 rounded-2xl overflow-hidden shadow-2xl shadow-indigo-500/10"
+        exit={{ scale: 0.96, opacity: 0, y: 12 }}
+        transition={{ duration: 0.18 }}
+        onClick={(e) => e.stopPropagation()}
+        className="w-full max-w-2xl bg-card-u border border-border-u rounded-2xl overflow-hidden shadow-2xl"
       >
         {/* Header */}
-        <div className="p-6 md:p-8 border-b border-slate-100 dark:border-white/5 flex items-start justify-between">
+        <div className="p-6 border-b border-border-u flex items-start justify-between gap-4">
           <div>
-            <h2 className="text-2xl md:text-3xl font-bold bg-gradient-to-r from-slate-900 via-slate-800 to-indigo-600 dark:from-white dark:to-white/60 bg-clip-text text-transparent">Get AI Access</h2>
-            <p className="text-slate-500 dark:text-white/50 text-sm md:text-base mt-2">Essential setup to start your 30-day mastery journey.</p>
+            <span className="font-mono text-[11px] uppercase tracking-[0.2em] text-indigo-500 font-semibold">
+              Environment Setup
+            </span>
+            <h2 id="setup-guide-title" className="text-xl md:text-2xl font-bold text-foreground mt-1 font-display">
+              API &amp; Local AI Quickstart
+            </h2>
+            <p className="text-muted-u text-sm mt-1">
+              Optional cloud playgrounds and local Ollama setup for hands-on daily tasks. All built-in labs work offline with zero API keys.
+            </p>
           </div>
-          <button 
+          <button
+            type="button"
             onClick={onClose}
-            className="p-2 text-slate-400 dark:text-white/30 hover:text-slate-900 dark:hover:text-white bg-slate-100 dark:bg-white/5 rounded-full transition-colors"
+            aria-label="Close setup guide"
+            className="min-h-[44px] min-w-[44px] flex items-center justify-center text-muted-u hover:text-foreground bg-background border border-border-u rounded-xl transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5" aria-hidden="true" />
           </button>
         </div>
 
-        <div className="p-6 md:p-8 space-y-8 overflow-y-auto max-h-[70vh] custom-scrollbar">
-          {/* Section 1: AI Access */}
+        <div className="p-6 space-y-6 overflow-y-auto max-h-[68vh]">
+          {/* Section 1: Cloud Providers */}
           <section>
-            <div className="flex items-center gap-2 mb-4">
-              <Globe className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
-              <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200">Web & API Access</h3>
+            <div className="flex items-center gap-2 mb-3">
+              <Globe className="w-4 h-4 text-indigo-500" aria-hidden="true" />
+              <h3 className="text-sm font-semibold uppercase tracking-wider font-mono text-foreground">
+                Cloud Workbenches
+              </h3>
             </div>
-            <div className="grid grid-cols-1 gap-3">
+            <div className="grid grid-cols-1 gap-2.5">
               {aiProviders.map((provider) => (
                 <a
                   key={provider.name}
                   href={provider.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group flex items-center justify-between p-4 bg-slate-50 dark:bg-white/5 hover:bg-slate-100 dark:hover:bg-white/10 border border-slate-200 dark:border-white/5 rounded-xl transition-all"
+                  className="group flex items-center justify-between p-3.5 bg-background hover:border-indigo-500/40 border border-border-u rounded-xl transition-colors"
                 >
-                  <div className="flex items-center gap-4">
-                    <div className="p-2 bg-indigo-500/10 rounded-lg group-hover:bg-indigo-500/20 transition-colors">
-                      <provider.icon className="w-5 h-5 text-indigo-600 dark:text-indigo-400" />
+                  <div className="flex items-center gap-3.5">
+                    <div className="p-2 bg-indigo-500/10 rounded-lg">
+                      <provider.icon className="w-4 h-4 text-indigo-500" aria-hidden="true" />
                     </div>
                     <div>
-                      <div className="font-medium text-slate-800 dark:text-slate-200">{provider.name}</div>
-                      <div className="text-xs text-slate-500 dark:text-white/40">{provider.feature}</div>
+                      <div className="font-medium text-sm text-foreground">{provider.name}</div>
+                      <div className="text-xs text-muted-u">{provider.feature}</div>
                     </div>
                   </div>
-                  <ExternalLink className="w-4 h-4 text-slate-300 dark:text-white/20 group-hover:text-slate-600 dark:group-hover:text-white/60 transition-colors" />
+                  <ExternalLink
+                    className="w-4 h-4 text-muted-u group-hover:text-foreground transition-colors shrink-0"
+                    aria-hidden="true"
+                  />
                 </a>
               ))}
             </div>
           </section>
 
-          {/* Section 2: CLI Usage */}
+          {/* Section 2: Local Ollama CLI */}
           <section>
-            <div className="flex items-center gap-2 mb-4">
-              <Terminal className="w-5 h-5 text-emerald-600 dark:text-emerald-400" />
-              <h3 className="text-lg font-semibold text-slate-800 dark:text-slate-200">Terminal & Local AI</h3>
+            <div className="flex items-center gap-2 mb-3">
+              <Terminal className="w-4 h-4 text-emerald-500" aria-hidden="true" />
+              <h3 className="text-sm font-semibold uppercase tracking-wider font-mono text-foreground">
+                Local Open-Weight Models
+              </h3>
             </div>
-            
-            <div className="flex gap-2 p-1 bg-slate-100 dark:bg-white/5 rounded-lg mb-4 w-fit border border-slate-200 dark:border-white/5">
+
+            <div className="flex gap-1.5 p-1 bg-background rounded-lg mb-3 w-fit border border-border-u">
               {(['mac', 'windows', 'linux'] as OSType[]).map((t) => (
                 <button
                   key={t}
+                  type="button"
                   onClick={() => handleSetOs(t)}
                   className={cn(
-                    "px-4 py-1.5 text-xs rounded-md font-medium transition-all capitalize",
-                    os === t ? "bg-indigo-600 text-white shadow-lg" : "text-slate-500 dark:text-white/40 hover:text-indigo-600 dark:hover:text-white"
+                    'min-h-[36px] px-3.5 py-1 text-xs rounded-md font-medium transition-colors capitalize',
+                    os === t
+                      ? 'bg-indigo-600 text-white'
+                      : 'text-muted-u hover:text-foreground'
                   )}
                 >
                   {t}
@@ -133,36 +191,49 @@ export function OnboardingModal({ onClose }: OnboardingModalProps) {
               ))}
             </div>
 
-            <div className="p-5 bg-slate-50 dark:bg-black border border-slate-200 dark:border-white/10 rounded-xl relative overflow-hidden group">
-              <div className="absolute top-0 right-0 p-3 opacity-10 dark:opacity-20 text-slate-400 dark:text-white">
-                <Monitor className="w-12 h-12" />
-              </div>
-              
-              <div className="relative z-10">
-                <div className="text-sm font-semibold mb-1 text-emerald-600 dark:text-emerald-400">{cliCommands[os].tool}</div>
-                <p className="text-slate-500 dark:text-white/50 text-xs mb-4">{cliCommands[os].description}</p>
-                
-                <div className="bg-white dark:bg-white/5 p-3 rounded-lg font-mono text-sm border border-slate-200 dark:border-white/5 flex items-center justify-between shadow-sm">
-                  <span className="text-indigo-600 dark:text-indigo-300 font-medium">$ {cliCommands[os].command}</span>
-                  <button 
-                    onClick={() => navigator.clipboard.writeText(cliCommands[os].command)}
-                    className="text-[10px] uppercase font-bold text-slate-400 dark:text-white/30 hover:text-indigo-600 dark:hover:text-white transition-colors"
-                  >
-                    Copy
-                  </button>
+            <div className="p-4 bg-background border border-border-u rounded-xl">
+              <div className="flex items-center justify-between gap-2 mb-1">
+                <div className="text-sm font-semibold text-emerald-600 dark:text-emerald-400">
+                  {cliCommands[os].tool}
                 </div>
+                <Monitor className="w-4 h-4 text-muted-u" aria-hidden="true" />
+              </div>
+              <p className="text-muted-u text-xs mb-3">{cliCommands[os].description}</p>
+
+              <div className="bg-card-u p-3 rounded-lg font-mono text-xs border border-border-u flex items-center justify-between gap-3">
+                <code className="text-foreground overflow-x-auto whitespace-nowrap">
+                  $ {cliCommands[os].command}
+                </code>
+                <button
+                  type="button"
+                  onClick={handleCopyCommand}
+                  className="shrink-0 min-h-[34px] inline-flex items-center gap-1 px-2.5 py-1 rounded-md border border-border-u bg-background hover:border-indigo-500/40 text-[11px] font-medium text-foreground transition-colors"
+                >
+                  {copiedCmd ? (
+                    <>
+                      <Check className="w-3.5 h-3.5 text-emerald-500" aria-hidden="true" />
+                      Copied
+                    </>
+                  ) : (
+                    <>
+                      <Copy className="w-3.5 h-3.5 text-muted-u" aria-hidden="true" />
+                      Copy
+                    </>
+                  )}
+                </button>
               </div>
             </div>
           </section>
         </div>
 
         {/* Footer */}
-        <div className="p-6 md:p-8 bg-slate-50 dark:bg-white/[0.02] border-t border-slate-100 dark:border-white/5 flex justify-end">
-          <button 
+        <div className="p-5 bg-background border-t border-border-u flex justify-end">
+          <button
+            type="button"
             onClick={onClose}
-            className="w-full sm:w-auto px-8 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-xl transition-all shadow-lg shadow-indigo-500/20 active:scale-95"
+            className="w-full sm:w-auto min-h-[44px] px-6 py-2.5 bg-indigo-600 hover:bg-indigo-500 text-white font-semibold text-sm rounded-xl transition-colors"
           >
-            I'm Ready to Begin
+            Back to Curriculum
           </button>
         </div>
       </motion.div>

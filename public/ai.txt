@@ -1,5 +1,12 @@
-User-agent: GPTBot
-Disallow: /
+# Open Educational AI Curriculum — Crawling & Citation Allowed
+User-agent: *
+Allow: /
 
-User-agent: CCBot
-Disallow: /
+User-agent: GPTBot
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /

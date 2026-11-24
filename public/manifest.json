@@ -1,15 +1,16 @@
 {
   "name": "AI Mastery in 30 Days",
-  "short_name": "AIMastery",
+  "short_name": "AI Mastery 30",
+  "description": "Free, open-access 30-day developer curriculum covering LLMs, prompt engineering, RAG, MCP, autonomous agents, and AI security.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#050505",
-  "theme_color": "#F27D26",
+  "background_color": "#09090b",
+  "theme_color": "#6366f1",
   "icons": [
     {
-      "src": "/favicon.ico",
-      "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     },
     {
       "src": "/apple-touch-icon.png",
